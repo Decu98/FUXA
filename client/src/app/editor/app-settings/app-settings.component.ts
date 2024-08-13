@@ -29,6 +29,8 @@ export class AppSettingsComponent implements OnInit {
     authenticationTooltip = '';
     smtpTesting = false;
     smtpTestAddress = '';
+    dbTesting = false;
+    dbTestAddress = 'localhost'
     showPassword = false;
 
     daqstoreType = DaqStoreType;
@@ -110,6 +112,27 @@ export class AppSettingsComponent implements OnInit {
             }
         });
     }
+    
+    // Need upgrade
+    onDbTest() {
+        this.dbTesting = true;
+        let msg = <MailMessage>{ from: this.settings.smtp.mailsender || this.settings.smtp.username, to: this.smtpTestAddress, subject: 'FUXA', text: 'TEST' };
+        this.diagnoseService.sendMail(msg, this.settings.smtp).subscribe(() => {
+            this.smtpTesting = false;
+            var msg = '';
+            this.translateService.get('msg.sendmail-success').subscribe((txt: string) => { msg = txt; });
+            this.toastr.success(msg);
+        }, error => {
+            this.smtpTesting = false;
+            if (error.message) {
+                this.notifyError(error.message);
+            } else {
+                var msg = '';
+                this.translateService.get('msg.sendmail-error').subscribe((txt: string) => { msg = txt; });
+                this.notifyError(msg);
+            }
+        });
+    }
 
     isSmtpTestReady() {
         if (this.smtpTesting) {
@@ -122,6 +145,22 @@ export class AppSettingsComponent implements OnInit {
             return false;
         }
         if (!this.smtpTestAddress || !this.smtpTestAddress.length) {
+            return false;
+        }
+        return true;
+    }
+
+    isDbTestReady() {
+        if (this.dbTesting) {
+            return false;
+        }
+        if (!this.settings.db.host || !this.settings.db.host.length) {
+            return false;
+        }
+        if (!this.settings.db.username || !this.settings.db.username.length) {
+            return false;
+        }
+        if (!this.dbTestAddress || !this.dbTestAddress.length) {
             return false;
         }
         return true;

@@ -933,6 +933,11 @@ mat-toolbar-row {
     position: absolute;
 }
 
+.show-password-db {
+    bottom: 2px;
+    position: absolute;
+}
+
 /* Color picker */
 .color-picker .hue-alpha {
     padding: 0 !important;

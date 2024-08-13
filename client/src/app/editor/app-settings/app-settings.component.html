@@ -84,6 +84,34 @@
                     </div>
                 </div>
             </mat-tab>
+            <mat-tab label="{{'dlg.app-settings-db' | translate}}">
+                <div class="block mt20 tab-db">
+                    <div class="block">
+                        <div class="my-form-field">
+                            <span>{{'dlg.app-settings-db-host' | translate}}</span>
+                            <input [(ngModel)]="settings.db.host" placeholder="db.example.com" style="width: 320px" type="text">
+                        </div>
+                        <div class="my-form-field lbk ml10">
+                            <span>{{'dlg.app-settings-db-port' | translate}}</span>
+                            <input numberOnly [(ngModel)]="settings.db.port" style="width: 80px" type="text">
+                        </div>
+                    </div>
+                    <div class="my-form-field block mt15 w100">
+                        <span>{{'dlg.app-settings-db-user' | translate}}</span>
+                        <input [(ngModel)]="settings.db.username" placeholder="fuxa@example.com" style="width: 320px" class="input-row" type="text">
+                    </div>
+                    <div class="my-form-field block mt15 w100">
+                        <span>{{'dlg.app-settings-db-password' | translate}}</span>
+                        <input autocomplete="off" (keydown)="keyDownStopPropagation($event)" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="settings.db.password" style="width: 320px" class="input-row">
+                        <mat-icon matSuffix (click)="showPassword = !showPassword" class="show-password-db">{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                    </div>
+                    <div class="block mt15 w100">
+                        <div class="my-form-field lbk ml10">
+                            <button mat-raised-button color="basic" (click)="onDbTest()" [disabled]="!isDbTestReady()">{{'dlg.app-settings-db-test' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
             <mat-tab label="{{'dlg.app-settings-daqstore' | translate}}">
                 <div class="block mt20 tab-daq">
                     <div class="my-form-field block">

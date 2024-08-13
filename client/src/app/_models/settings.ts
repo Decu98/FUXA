@@ -13,6 +13,8 @@ export class AppSettings {
     broadcastAll = true;
     /** Smtp to send mails */
     smtp = new SmtpSettings();
+    /** Database to get data */
+    db = new DbSettings();
     /** Daq store database */
     daqstore = new DaqStore();
     /** Alarms store settings */
@@ -40,6 +42,26 @@ export class SmtpSettings {
             this.mailsender = smtp.mailsender;
             this.username = smtp.username;
             this.password = smtp.password;
+        }
+    }
+}
+
+export class DbSettings {
+    /** Host address */
+    host = '';
+    /** Connection port */
+    port = 2000;
+    /** authentication user */
+    username = '';
+    /** authentication password */
+    password = '';
+
+    constructor(db: DbSettings = null) {
+        if (db) {
+            this.host = db.host;
+            this.port = db.port;
+            this.username = db.username;
+            this.password = db.password;
         }
     }
 }
